@@ -1,0 +1,37 @@
+---
+
+threads: 30
+base: 'https://xdai.poa.network'
+iterations: 10
+rampup: 3
+
+plan:
+  - name: eth_blockNumber
+    request:
+      url: /
+      method: POST
+      body: '{"jsonrpc":"2.0","method":"eth_blockNumber","id":1}'
+  - name: eth_getBalance
+    request:
+      url: /
+      method: POST
+      body: '{"jsonrpc":"2.0","method":"eth_getBalance","params":[{{ item }}, "latest"],"id": 1}'
+    with_items:
+      - "0x10cC249EafD6620dF60aafA14fc19512D4ef108F"
+      - "0x10AaE121b3c62F3DAfec9cC46C27b4c1dfe4A835"
+  - name: net_version
+    request:
+      url: /
+      method: POST
+      body: '{"jsonrpc":"2.0","method":"net_version","params":[],"id":3}'
+  - name: eth_getBlockByNumber
+    request:
+      url: /
+      method: POST
+      body: '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["{{ item }}", true],"id":1}'
+    with_items:
+      - "0xF4240"
+      - "0x1E8480"
+      - "0x2DC6C0"
+
+
