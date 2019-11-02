@@ -1,8 +1,8 @@
 ---
 
-threads: 30
-base: 'https://xdai.poa.network'
-iterations: 10
+threads: 50
+base: 'https://dai.poa.network'
+iterations: 100
 rampup: 3
 
 plan:
@@ -11,11 +11,15 @@ plan:
       url: /
       method: POST
       body: '{"jsonrpc":"2.0","method":"eth_blockNumber","id":1}'
+      headers:
+        content-type: application/json
   - name: eth_getBalance
     request:
       url: /
       method: POST
-      body: '{"jsonrpc":"2.0","method":"eth_getBalance","params":[{{ item }}, "latest"],"id": 1}'
+      body: '{"jsonrpc":"2.0","method":"eth_getBalance","params":["{{ item }}", "latest"],"id": 1}'
+      headers:
+        content-type: application/json
     with_items:
       - "0x10cC249EafD6620dF60aafA14fc19512D4ef108F"
       - "0x10AaE121b3c62F3DAfec9cC46C27b4c1dfe4A835"
@@ -24,14 +28,23 @@ plan:
       url: /
       method: POST
       body: '{"jsonrpc":"2.0","method":"net_version","params":[],"id":3}'
+      headers:
+        content-type: application/json
   - name: eth_getBlockByNumber
     request:
       url: /
       method: POST
       body: '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["{{ item }}", true],"id":1}'
+      headers:
+        content-type: application/json
     with_items:
       - "0xF4240"
       - "0x1E8480"
       - "0x2DC6C0"
-
-
+  - name: eth_getLogs
+    request:
+      url: /
+      method: POST
+      body: '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock": "0x2f7","toBlock": "0x63e0d2", "topics":["0x127650bcfb0ba017401abe4931453a405140a8fd36fece67bae2db174d3fdd63"],"address": "0x4433698f5f129a84bf1942350de8e65daf8c9fef"}],"id":1}'
+      headers:
+        content-type: application/json
