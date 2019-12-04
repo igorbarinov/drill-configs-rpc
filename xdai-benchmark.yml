@@ -2,7 +2,7 @@
 
 threads: 50
 base: 'https://dai.poa.network'
-iterations: 100
+iterations: 5
 rampup: 3
 
 plan:
